@@ -1,0 +1,49 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+
+<h5><a href='javascript:history.go(-1)'>Projects</a> > {{ project.project_name }}</h5>
+{% if project.proj_is_complete %}
+    <!-- <div class="card-panel light-green lighten-4">{{ project.project_name }} is complete, awesome!</div> -->
+    <div class="blue-text"><b>{{ project.project_name }} is complete, awesome! <i class="tiny material-icons">grade</i></b></div>
+    <hr>
+{% else %}
+    {{ project.project_name }} is {{ project.completed_perc }}% complete.
+    <hr>
+{% endif %}
+<br>
+
+<table class="striped">
+  <thead>
+    <tr>
+        <th>Task</th>
+        <th>Description</th>
+        <th>Due date</th>
+        <th>Status</th>
+    </tr>
+  </thead>
+<tbody>
+    {% if project.task_set.all %}
+        {% for task in project.task_set.all %}
+        <tr>
+            <td width="200"><strong>{{ task.task_name }}</strong></td>
+            <td width="800"><i>{{ task.task_desc }}</i></td>
+            <td width="150">{% if task.past_due == True and project.is_complete == False and task.is_complete == False %}
+              <div class="red-text">
+                {{ task.due_date }}
+              </div>
+              {% else %}
+              {{ task.due_date }}
+              {% endif %}</td>
+            <td width="100">{{ task.icon|safe }}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <p>No tasks are available for this project.</p>
+    {% endif %}
+</tbody>
+</table>
+<br>
+<a href="/projects">Go back to projects</a>
+
+{% endblock %}

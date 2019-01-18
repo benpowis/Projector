@@ -1,0 +1,59 @@
+{% extends "projects/base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col s8">
+    <h5>Projects</h5>
+
+<table class="highlight">
+<tbody>
+  <thead>
+    <tr>
+        <th>Project name</th>
+        <th>Total tasks</th>
+        <th>Completed</th>
+        <th>Status</th>
+    </tr>
+  </thead>
+    {% if project_list %}
+        {% for project in project_list %}
+        <tr>
+            <td><strong><a href="{% url 'projects:detail' project.id %}">{{ project.project_name }}</a></strong></td>
+            <td>{{ project.total_tasks }}</td>
+            <td>{{ project.completed_tasks }}</td>
+            <td>{{ project.complete_icon|safe }}</td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        <p>No projects are available.</p>
+    {% endif %}
+</tbody>
+</table>
+
+  </div>
+
+  <div class="col s4"><div class="row">
+    <div>
+      <div class="card-panel blue lighten-1">
+        <span class="white-text"><h5>Welcome to projects</h5><br>
+          Projects is designed to be a lightweight project tracker for machine learning projects.
+          Each project can contain multiple tasks, click on the project name in the list to the left to see the tasks contained in this project.
+        </span>
+      </div>
+      <div class="row">
+  <div class="col s6">      <div class="card-panel blue lighten-1" align="center">
+          <span class="white-text"><h5><i class="medium material-icons">assignment</i><br> {{ total_projects }} total projects</h5>
+          </span>
+        </div></div>
+  <div class="col s6">      <div class="card-panel blue lighten-1" align="center">
+          <span class="white-text"><h5><i class="medium material-icons">assessment</i><br> {{ total_tasks }} total created tasks</h5>
+          </span>
+        </div></div>
+      </div>
+
+    </div>
+  </div></div>
+</div>
+
+{% endblock %}
